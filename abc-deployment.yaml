@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abc-technologies-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: abc-technologies
+  template:
+    metadata:
+      labels:
+        app: abc-technologies
+    spec:
+      containers:
+      - name: abc-technologies
+        image: sumabhat/abc-technologies:13
+        ports:
+        - containerPort: 8080
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
