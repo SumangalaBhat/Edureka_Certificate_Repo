@@ -4,7 +4,7 @@ pipeline
 	environment 
 	{
         KUBECONFIG = '/var/lib/jenkins/.kube/config'
-        ANSIBLE_PLAYBOOK_PATH = '/home/sumangalasanthosha/edureka/Edureka_Certificate_Repo/deploy.yml'
+        
     }
 	stages
 	{
