@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: abc-technologies
-        image: sumabhat/abc-technologies:13
+        image: sumabhat/abc-technologies:1
         ports:
         - containerPort: 8080
       tolerations:
