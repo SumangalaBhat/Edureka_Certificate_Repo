@@ -1,6 +1,11 @@
 pipeline
 {
 	agent any
+	environment 
+	{
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
+        ANSIBLE_PLAYBOOK_PATH = '/home/sumangalasanthosha/edureka/Edureka_Certificate_Repo/deploy.yml'
+    }
 	stages
 	{
 		stage('Code Checkout')
@@ -51,7 +56,7 @@ pipeline
 		{ 
 			steps
 			{   
-			    withDockerRegistry([credentialsId: "Dockerhub_sumabhat"]) // url: "https://hub.docker.com/repositories/sumabhat" ])
+			    withDockerRegistry([credentialsId: "Dockerhub_sumabhat", url:"https://index.docker.io/v1/"])
 			    {   
 			       sh 'docker push sumabhat/abc_technologies:$BUILD_NUMBER'
 				   
@@ -66,7 +71,13 @@ pipeline
 				sh 'docker run -itd -P sumabhat/abc_technologies:$BUILD_NUMBER'
 			}
 		}
-
-
+		stage('Deploy to kubernetes')
+		{
+			steps
+			{
+				sh 'kubectl apply -f abc-deployment.yaml'
+				sh 'kubectl apply -f service.yaml'
+			}
+		}
    }
 }
